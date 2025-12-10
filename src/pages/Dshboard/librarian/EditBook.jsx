@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../utils";
 import LoadingSpinner from "../../../component/Shared/LoadingSpinner";
@@ -12,6 +12,7 @@ import { useEffect } from "react";
 const EditBook = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   /**  Fetch the existing book data */
   const {
@@ -56,6 +57,7 @@ const EditBook = () => {
 
     onSuccess: () => {
       toast.success("Book updated successfully!");
+      navigate("/dashboard/my-books");
     },
 
     onError: () => {
