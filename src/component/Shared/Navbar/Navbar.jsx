@@ -23,14 +23,7 @@ const Navbar = () => {
         <Container>
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
             {/* Logo */}
-            <Link to="/">
-              <img
-                src="https://i.ibb.co.com/rGSZp7xP/download.jpg"
-                alt="logo"
-                width="100"
-                height="100"
-              />
-            </Link>
+            <Link to="/">📚 Library</Link>
 
             {/* MAIN NAV LINKS (visible on md & lg screens) */}
             <div className="hidden md:flex items-center gap-8 text-[16px] font-medium">
