@@ -32,14 +32,15 @@ const DashboardLayout = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
+
       <div
         className={`${
           collapse ? "w-16" : "w-64"
-        } bg-gray-900 text-white transition-all duration-300 flex flex-col`}
+        } bg-gray-900 text-white transition-all duration-300 flex flex-col 
+     overflow-y-auto no-scrollbar`}
       >
-        {/* Logo Section */}
+        {/* Logo */}
         <Link to="/">
-          {" "}
           <div className="flex items-center justify-center py-4">
             {!collapse ? (
               <h1 className="text-xl font-bold tracking-wide">📚 Library</h1>
@@ -49,7 +50,7 @@ const DashboardLayout = () => {
           </div>
         </Link>
 
-        {/* Toggle Button */}
+        {/* Toggle */}
         <button
           className="bg-gray-700 px-3 py-2 rounded mx-2"
           onClick={() => setCollapse(!collapse)}
@@ -57,7 +58,7 @@ const DashboardLayout = () => {
           {collapse ? ">" : "<"}
         </button>
 
-        {/* Menu items */}
+        {/* Menu */}
         <ul className="space-y-2 mt-4 flex-1">
           {menus.map((item) => (
             <li key={item.name}>
@@ -72,19 +73,16 @@ const DashboardLayout = () => {
           ))}
         </ul>
 
-        {/* Logout Button (sticks to the bottom) */}
-        <Link to="/">
-          {" "}
-          <div className="p-3 border-t border-gray-800">
-            <button
-              onClick={logOut}
-              className="flex items-center gap-3 w-full p-2 hover:bg-red-600 bg-red-500 rounded text-white"
-            >
-              <FiLogOut size={20} />
-              {!collapse && <span>Logout</span>}
-            </button>
-          </div>
-        </Link>
+        {/* Logout */}
+        <div className="p-3 border-t border-gray-800">
+          <button
+            onClick={logOut}
+            className="flex items-center gap-3 w-full p-2 hover:bg-red-600 bg-red-500 rounded text-white"
+          >
+            <FiLogOut size={20} />
+            {!collapse && <span>Logout</span>}
+          </button>
+        </div>
       </div>
 
       {/* Main Content */}
