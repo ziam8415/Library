@@ -31,18 +31,6 @@ const MyBookRow = ({ book }) => {
         <p className="text-gray-700">{book.author}</p>
       </td>
 
-      {/* Status */}
-      <td className="px-5 py-3 text-sm">
-        <select
-          value={status}
-          onChange={handleStatusChange}
-          className="px-3 py-2 border border-gray-300 rounded-md focus:outline-emerald-500 bg-white text-gray-900"
-        >
-          <option value="Published">Published</option>
-          <option value="Unpublished">Unpublished</option>
-        </select>
-      </td>
-
       {/* Edit Button */}
       <td className="px-5 py-3 text-sm">
         <Link

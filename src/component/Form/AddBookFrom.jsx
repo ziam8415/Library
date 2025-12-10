@@ -61,15 +61,17 @@ const AddBookForm = () => {
         quantity: Number(quantity),
         price: Number(price),
         category,
+        createdAt: Date.now(),
         seller: {
           image: user?.photoURL,
           name: user?.displayName,
           email: user?.email,
         },
       };
+      console.log(bookData);
 
       await mutateAsync(bookData);
-      reset();
+      //reset();
     } catch (err) {
       console.log(err);
     }

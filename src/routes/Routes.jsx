@@ -16,10 +16,6 @@ import AdminProfile from "../pages/Dshboard/admin/AdminProfile";
 import EditBook from "../pages/Dshboard/librarian/EditBook";
 
 export const router = createBrowserRouter([
-  //   {
-  //     path: "/",
-  //     element: <Home />,
-  //   },
   {
     path: "/",
     element: <MainLayout />,

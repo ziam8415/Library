@@ -29,49 +29,40 @@ const MyBooks = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="container mx-auto px-4 sm:px-8">
-      <div className="py-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-6">My Books</h2>
-        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 overflow-x-auto">
-          <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-            <table className="min-w-full leading-normal">
-              <thead>
-                <tr>
-                  <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                    Image
-                  </th>
-                  <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                    Book Name
-                  </th>
-                  <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                    Author
-                  </th>
-                  <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                    Status
-                  </th>
-                  <th className="px-5 py-3 bg-white border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-normal">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {books.length > 0 ? (
-                  books.map((book) => <MyBookRow key={book._id} book={book} />)
-                ) : (
-                  <tr>
-                    <td
-                      colSpan={5}
-                      className="px-5 py-5 border-b border-gray-200 text-center text-gray-500"
-                    >
-                      No books added yet.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div className="w-full overflow-x-auto">
+      <table className="min-w-full text-left border-collapse">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-3 sm:px-5 py-3 border-b text-gray-800 text-xs sm:text-sm uppercase">
+              Image
+            </th>
+            <th className="px-3 sm:px-5 py-3 border-b text-gray-800 text-xs sm:text-sm uppercase">
+              Book Name
+            </th>
+            <th className="px-3 sm:px-5 py-3 border-b text-gray-800 text-xs sm:text-sm uppercase">
+              Author
+            </th>
+            <th className="px-3 sm:px-5 py-3 border-b text-gray-800 text-xs sm:text-sm uppercase">
+              Action
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {books.length > 0 ? (
+            books.map((book) => <MyBookRow key={book._id} book={book} />)
+          ) : (
+            <tr>
+              <td
+                colSpan={4}
+                className="px-3 py-5 text-center text-gray-500 text-sm"
+              >
+                No books added yet.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
