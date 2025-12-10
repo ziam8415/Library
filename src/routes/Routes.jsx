@@ -13,6 +13,7 @@ import Orders from "../pages/Dshboard/librarian/Orders";
 import AllUsers from "../pages/Dshboard/admin/AllUsers";
 import ManageBooks from "../pages/Dshboard/admin/ManageBooks";
 import AdminProfile from "../pages/Dshboard/admin/AdminProfile";
+import EditBook from "../pages/Dshboard/librarian/EditBook";
 
 export const router = createBrowserRouter([
   //   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       // librarian
       { path: "add-book", element: <AddBook /> },
       { path: "my-books", element: <MyBooks /> },
+      {
+        path: "edit-book/:id",
+        element: <EditBook />,
+      },
       { path: "orders", element: <Orders /> },
 
       // admin

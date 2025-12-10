@@ -1,81 +1,94 @@
 import { useForm } from "react-hook-form";
-import { imageUpload } from "../../utils";
 import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
-import LoadingSpinner from "../Shared/LoadingSpinner";
-import ErrorPage from "../../pages/ErrorPage";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
-import useAuth from "../../hooks/useAuth";
+import { useParams } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { imageUpload } from "../../../utils";
+import LoadingSpinner from "../../../component/Shared/LoadingSpinner";
+import { useEffect } from "react";
 
-const AddBookForm = () => {
-  const { user } = useAuth();
+const EditBook = () => {
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
 
+  /**  Fetch the existing book data */
   const {
-    isPending,
+    data: book,
+    isLoading,
     isError,
-    mutateAsync,
-    reset: mutationReset,
-  } = useMutation({
-    mutationFn: async (payload) =>
-      await axios.post(`${import.meta.env.VITE_API_URL}/books`, payload),
-
-    onSuccess: () => {
-      toast.success("Book added successfully!");
-      mutationReset();
-    },
-
-    onError: (error) => {
-      console.log(error);
+  } = useQuery({
+    queryKey: ["book", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/books/${id}`);
+      return res.data;
     },
   });
 
+  /**  React Hook Form */
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm();
 
+  /**  Prefill form after data loads (FIXED) */
+  useEffect(() => {
+    if (book) {
+      reset({
+        name: book.name,
+        author: book.author,
+        price: book.price,
+        quantity: book.quantity,
+        category: book.category,
+        status: book.status,
+        description: book.description,
+      });
+    }
+  }, [book, reset]);
+
+  /**  Mutation for update */
+  const { mutateAsync, isPending: isUpdating } = useMutation({
+    mutationFn: async (payload) =>
+      await axios.put(`${import.meta.env.VITE_API_URL}/books/${id}`, payload),
+
+    onSuccess: () => {
+      toast.success("Book updated successfully!");
+    },
+
+    onError: () => {
+      toast.error("Update failed!");
+    },
+  });
+
   const onSubmit = async (data) => {
-    const {
-      name,
-      author,
-      status,
-      description,
-      quantity,
-      price,
-      category,
-      image,
-    } = data;
-
     try {
-      const imageUrl = await imageUpload(image[0]);
+      let imageUrl = book.image; // keep old image
 
-      const bookData = {
+      if (data.image?.length > 0) {
+        imageUrl = await imageUpload(data.image[0]);
+      }
+
+      const updatedData = {
+        name: data.name,
+        author: data.author,
+        price: Number(data.price),
+        quantity: Number(data.quantity),
+        category: data.category,
+        status: data.status,
+        description: data.description,
         image: imageUrl,
-        name,
-        author,
-        status,
-        description,
-        quantity: Number(quantity),
-        price: Number(price),
-        category,
-        seller: {
-          image: user?.photoURL,
-          name: user?.displayName,
-          email: user?.email,
-        },
       };
 
-      await mutateAsync(bookData);
-      reset();
+      await mutateAsync(updatedData);
     } catch (err) {
       console.log(err);
     }
   };
 
-  if (isPending) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner />;
   if (isError) return <ErrorPage />;
 
   return (
@@ -84,7 +97,9 @@ const AddBookForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-4xl bg-white shadow-lg rounded-xl p-10 space-y-10 border"
       >
-        <h2 className="text-2xl font-semibold text-gray-900">Add New Book</h2>
+        <h2 className="text-2xl font-semibold text-gray-900">
+          Edit Book — {book.name}
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Book Name */}
@@ -92,7 +107,6 @@ const AddBookForm = () => {
             <label className="block text-gray-700 font-medium">Book Name</label>
             <input
               type="text"
-              placeholder="Enter book name"
               className="w-full px-4 py-3 border rounded-lg focus:outline-emerald-500"
               {...register("name", { required: "Book name is required" })}
             />
@@ -101,12 +115,11 @@ const AddBookForm = () => {
             )}
           </div>
 
-          {/* Author Name */}
+          {/* Author */}
           <div className="space-y-1">
             <label className="block text-gray-700 font-medium">Author</label>
             <input
               type="text"
-              placeholder="Enter author name"
               className="w-full px-4 py-3 border rounded-lg focus:outline-emerald-500"
               {...register("author", { required: "Author name is required" })}
             />
@@ -120,13 +133,9 @@ const AddBookForm = () => {
             <label className="block text-gray-700 font-medium">Price</label>
             <input
               type="number"
-              placeholder="Price"
               className="w-full px-4 py-3 border rounded-lg focus:outline-emerald-500"
-              {...register("price", { required: "Price is required" })}
+              {...register("price")}
             />
-            {errors.price && (
-              <p className="text-sm text-red-500">{errors.price.message}</p>
-            )}
           </div>
 
           {/* Quantity */}
@@ -134,19 +143,12 @@ const AddBookForm = () => {
             <label className="block text-gray-700 font-medium">Quantity</label>
             <input
               type="number"
-              placeholder="Quantity"
               className="w-full px-4 py-3 border rounded-lg focus:outline-emerald-500"
-              {...register("quantity", {
-                required: "Quantity is required",
-                min: 1,
-              })}
+              {...register("quantity")}
             />
-            {errors.quantity && (
-              <p className="text-sm text-red-500">{errors.quantity.message}</p>
-            )}
           </div>
 
-          {/* Category (Optional) */}
+          {/* Category */}
           <div className="space-y-1">
             <label className="block text-gray-700 font-medium">Category</label>
             <select
@@ -166,14 +168,11 @@ const AddBookForm = () => {
             <label className="block text-gray-700 font-medium">Status</label>
             <select
               className="w-full px-4 py-3 border rounded-lg focus:outline-emerald-500"
-              {...register("status", { required: "Status is required" })}
+              {...register("status")}
             >
-              <option value="Available">published</option>
-              <option value="Out of Stock">unpublished</option>
+              <option value="Available">Published</option>
+              <option value="Out of Stock">Unpublished</option>
             </select>
-            {errors.status && (
-              <p className="text-sm text-red-500">{errors.status.message}</p>
-            )}
           </div>
 
           {/* Description */}
@@ -182,10 +181,9 @@ const AddBookForm = () => {
               Description
             </label>
             <textarea
-              placeholder="Write book description..."
               className="w-full h-32 px-4 py-3 border rounded-lg focus:outline-emerald-500"
               {...register("description")}
-            ></textarea>
+            />
           </div>
 
           {/* Image */}
@@ -193,27 +191,35 @@ const AddBookForm = () => {
             <label className="block text-gray-700 font-medium">
               Book Image
             </label>
+
+            <img
+              src={book.image}
+              alt=""
+              className="w-32 h-40 object-cover rounded mb-3 border"
+            />
+
             <input
               type="file"
               accept="image/*"
               className="w-full border rounded-lg p-3 cursor-pointer bg-gray-50"
-              {...register("image", { required: "Book image is required" })}
+              {...register("image")}
             />
-            {errors.image && (
-              <p className="text-sm text-red-500">{errors.image.message}</p>
-            )}
+
+            <p className="text-gray-500 text-sm">
+              Leave empty to keep the current image.
+            </p>
           </div>
         </div>
 
-        {/* Submit */}
+        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-emerald-600 hover:bg-emerald-700 transition text-white py-3 rounded-lg flex justify-center font-medium"
         >
-          {isPending ? (
+          {isUpdating ? (
             <TbFidgetSpinner className="animate-spin text-2xl" />
           ) : (
-            "Add Book"
+            "Update Book"
           )}
         </button>
       </form>
@@ -221,4 +227,4 @@ const AddBookForm = () => {
   );
 };
 
-export default AddBookForm;
+export default EditBook;
