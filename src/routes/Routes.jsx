@@ -15,6 +15,7 @@ import ManageBooks from "../pages/Dshboard/admin/ManageBooks";
 import AdminProfile from "../pages/Dshboard/admin/AdminProfile";
 import EditBook from "../pages/Dshboard/librarian/EditBook";
 import AllBooks from "../pages/Books/AllBooks";
+import BookDetails from "../pages/Books/BookDetails";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: "/books",
         element: <AllBooks />,
+      },
+      {
+        path: "/book_details/:id",
+        element: <BookDetails />,
       },
     ],
   },

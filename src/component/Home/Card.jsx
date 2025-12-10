@@ -3,7 +3,7 @@ import { Link } from "react-router";
 const Card = ({ book }) => {
   return (
     <Link
-      to={`/`}
+      to={`/book_details/${book._id}`}
       className="col-span-1 cursor-pointer group shadow-xl p-3 rounded-xl"
     >
       <div key={book._id} className="border rounded p-4">
