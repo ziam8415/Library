@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import {
   FiUser,
   FiBook,
@@ -70,14 +70,17 @@ const DashboardLayout = () => {
         <ul className="space-y-2 mt-4 flex-1 px-2">
           {menus.map((item) => (
             <li key={item.name}>
-              <Link
+              <NavLink
                 to={item.to}
-                className="flex items-center gap-3 p-2 hover:bg-gray-700 rounded"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 p-2 rounded transition 
+     ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}`
+                }
                 onClick={() => setMobileOpen(false)} // close on mobile
               >
                 {item.icon}
                 {!collapse && <span>{item.name}</span>}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>

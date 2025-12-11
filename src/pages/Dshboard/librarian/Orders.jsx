@@ -9,7 +9,7 @@ const Orders = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  // Fetch orders where the logged-in librarian is the seller
+  // Fetch orders
   const {
     data: orders = [],
     isLoading,

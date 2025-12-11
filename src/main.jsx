@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router";
 import ThemeProvider from "./providers/ThemeProvider.jsx";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")).render(
       <ThemeProvider>
         <AuthProvider>
           <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>

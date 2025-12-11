@@ -33,6 +33,10 @@ const Navbar = () => {
               <Link to="/books" className="hover:text-blue-600 transition">
                 Books
               </Link>
+              <Link to="/coverage" className="hover:text-blue-600 transition">
+                Coverage
+              </Link>
+
               <button
                 onClick={toggleTheme}
                 // Border/Hover colors are already set for dark mode, which is great

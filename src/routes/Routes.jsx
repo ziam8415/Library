@@ -16,6 +16,7 @@ import AdminProfile from "../pages/Dshboard/admin/AdminProfile";
 import EditBook from "../pages/Dshboard/librarian/EditBook";
 import AllBooks from "../pages/Books/AllBooks";
 import BookDetails from "../pages/Books/BookDetails";
+import Coverage from "../component/Home/Coverage";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,11 @@ export const router = createBrowserRouter([
       {
         path: "/book_details/:id",
         element: <BookDetails />,
+      },
+      {
+        path: "/coverage",
+        element: <Coverage />,
+        loader: () => fetch("/warehouses.json").then((res) => res.json()),
       },
     ],
   },
