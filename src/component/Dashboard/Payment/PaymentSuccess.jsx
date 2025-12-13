@@ -1,10 +1,24 @@
+import { useEffect } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { Link, useSearchParams } from "react-router";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
+  const axiosSecure = useAxiosSecure();
+
   console.log(sessionId);
+
+  useEffect(() => {
+    if (sessionId) {
+      axiosSecure
+        .patch(`/payment-success?session_id=${sessionId}`)
+        .then((res) => {
+          console.log(res.data);
+        });
+    }
+  }, [sessionId, axiosSecure]);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md text-center animate-fadeIn">

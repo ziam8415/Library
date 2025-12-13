@@ -32,6 +32,7 @@ const MyOrders = () => {
     onSuccess: () =>
       queryClient.invalidateQueries([`orders_user_${user?.email}`]),
   });
+  console.log(orders);
 
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <p>Error loading orders.</p>;
@@ -64,31 +65,42 @@ const MyOrders = () => {
 
               <td className="p-3 capitalize">{order.status}</td>
 
-              <td className="p-3 text-center">
-                {order.status === "pending" && (
-                  <>
-                    <button
-                      onClick={() => cancelOrderMutation.mutate(order._id)}
-                      className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md mr-2"
-                    >
-                      Cancel
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setSelectedOrder(order);
-                        setIsModalOpen(true);
-                      }}
-                      className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
-                    >
-                      Pay Now
-                    </button>
-                  </>
-                )}
-
+              <td className="p-3 text-center space-x-2">
+                {/* ❌ Cancelled Order */}
                 {order.status === "cancelled" && (
-                  <span className="text-gray-400">No actions</span>
+                  <span className="text-gray-400 text-sm">Cancelled</span>
                 )}
+
+                {/* ⏳ Pending but NOT paid */}
+                {order.status === "pending" &&
+                  order.paymentStatus !== "paid" && (
+                    <>
+                      <button
+                        onClick={() => cancelOrderMutation.mutate(order._id)}
+                        className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm"
+                      >
+                        Cancel
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setIsModalOpen(true);
+                        }}
+                        className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm"
+                      >
+                        Pay Now
+                      </button>
+                    </>
+                  )}
+
+                {/* ✅ Paid but still pending delivery */}
+                {order.status === "pending" &&
+                  order.paymentStatus === "paid" && (
+                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-md text-sm font-medium">
+                      Paid
+                    </span>
+                  )}
               </td>
             </tr>
           ))}
