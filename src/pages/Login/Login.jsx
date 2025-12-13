@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { useForm } from "react-hook-form";
+import { saveOrUpdateUser } from "../../utils";
 
 const Login = () => {
   const { signIn, signInWithGoogle, loading, user, setLoading } = useAuth();
@@ -19,7 +20,13 @@ const Login = () => {
     const { email, password } = data;
     try {
       //User Login
-      await signIn(email, password);
+      const { user } = await signIn(email, password);
+      // save or update in db
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      });
 
       navigate(from, { replace: true });
       toast.success("Login Successful");
@@ -37,7 +44,13 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       //User Registration using google
-      await signInWithGoogle();
+      const { user } = await signInWithGoogle();
+      // save or update in db
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      });
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
