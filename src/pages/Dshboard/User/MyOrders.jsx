@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import LoadingSpinner from "../../../component/Shared/LoadingSpinner";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import PayModal from "../../../component/Modal/PayModal";
 
 const MyOrders = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  // Fetch all orders of this user
   const {
     data: orders = [],
     isLoading,
@@ -23,14 +26,11 @@ const MyOrders = () => {
     },
   });
 
-  // Cancel order mutation
   const cancelOrderMutation = useMutation({
-    mutationFn: async (id) => {
-      return axios.patch(`${import.meta.env.VITE_API_URL}/cancel-order/${id}`);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries([`orders_user_${user?.email}`]);
-    },
+    mutationFn: async (id) =>
+      axios.patch(`${import.meta.env.VITE_API_URL}/cancel-order/${id}`),
+    onSuccess: () =>
+      queryClient.invalidateQueries([`orders_user_${user?.email}`]),
   });
 
   if (isLoading) return <LoadingSpinner />;
@@ -64,36 +64,41 @@ const MyOrders = () => {
 
               <td className="p-3 capitalize">{order.status}</td>
 
-              {/* ACTION BUTTONS */}
               <td className="p-3 text-center">
-                {/* Cancel Button (only if pending) */}
                 {order.status === "pending" && (
-                  <button
-                    onClick={() => cancelOrderMutation.mutate(order._id)}
-                    className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md mr-2"
-                  >
-                    Cancel
-                  </button>
+                  <>
+                    <button
+                      onClick={() => cancelOrderMutation.mutate(order._id)}
+                      className="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded-md mr-2"
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        setIsModalOpen(true);
+                      }}
+                      className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                    >
+                      Pay Now
+                    </button>
+                  </>
                 )}
 
-                {/* Pay Now Button (only if pending) */}
-                {order.status === "pending" && (
-                  <button className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md">
-                    Pay Now
-                  </button>
-                )}
-
-                {/* When cancelled → show nothing */}
                 {order.status === "cancelled" && (
                   <span className="text-gray-400">No actions</span>
                 )}
-
-                {/* When shipped/delivered → no cancel, but maybe show "Track" later */}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Modal */}
+      {isModalOpen && selectedOrder && (
+        <PayModal order={selectedOrder} onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
   );
 };

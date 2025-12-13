@@ -33,9 +33,6 @@ const Navbar = () => {
               <Link to="/books" className="hover:text-blue-600 transition">
                 Books
               </Link>
-              <Link to="/coverage" className="hover:text-blue-600 transition">
-                Coverage
-              </Link>
 
               <button
                 onClick={toggleTheme}

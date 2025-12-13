@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth";
 
 const OrderModal = ({ book, onClose }) => {
   const { user } = useAuth();
-  console.log(user);
+  //console.log(user);
 
   const {
     register,

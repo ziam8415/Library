@@ -17,6 +17,8 @@ import EditBook from "../pages/Dshboard/librarian/EditBook";
 import AllBooks from "../pages/Books/AllBooks";
 import BookDetails from "../pages/Books/BookDetails";
 import Coverage from "../component/Home/Coverage";
+import PaymentSuccess from "../component/Dashboard/Payment/PaymentSuccess";
+import PaymentCancel from "../component/Dashboard/Payment/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -36,11 +38,6 @@ export const router = createBrowserRouter([
         path: "/book_details/:id",
         element: <BookDetails />,
       },
-      {
-        path: "/coverage",
-        element: <Coverage />,
-        loader: () => fetch("/warehouses.json").then((res) => res.json()),
-      },
     ],
   },
   { path: "/login", element: <Login /> },
@@ -55,6 +52,8 @@ export const router = createBrowserRouter([
       { path: "my-orders", element: <MyOrders /> },
       { path: "profile", element: <UserProfile /> },
       { path: "invoices", element: <Invoices /> },
+      { path: "payment-success", element: <PaymentSuccess /> },
+      { path: "payment-cancelled", element: <PaymentCancel /> },
 
       // librarian
       { path: "add-book", element: <AddBook /> },
