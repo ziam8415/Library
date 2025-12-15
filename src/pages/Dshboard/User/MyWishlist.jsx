@@ -1,45 +1,50 @@
-import { useContext } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { AuthContext } from "../../../providers/AuthContext";
+import LoadingSpinner from "../../../component/Shared/LoadingSpinner";
+import { toast } from "react-hot-toast";
+import useAuth from "../../../hooks/useAuth";
+import WishlistCard from "../../../component/Dashboard/Card/WishlistCard";
 
 const MyWishlist = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
 
   const { data: wishlist = [], isLoading } = useQuery({
     queryKey: ["wishlist", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/wishlist/${user.email}`
+        `${import.meta.env.VITE_API_URL}/wishlist/user/${user.email}`
       );
       return res.data;
     },
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  const handleRemove = async (id) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/wishlist/${id}`);
+      toast.success("Removed from wishlist");
+      queryClient.invalidateQueries(["wishlist", user.email]);
+    } catch {
+      toast.error("Failed to remove");
+    }
+  };
+
+  if (isLoading) return <LoadingSpinner />;
+
+  if (wishlist.length === 0) {
+    return (
+      <p className="text-gray-500 text-center mt-10">
+        Your wishlist is empty 💔
+      </p>
+    );
+  }
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">My Wishlist</h2>
-
-      {wishlist.length === 0 && (
-        <p className="text-gray-500">No books in wishlist</p>
-      )}
-
-      <div className="grid md:grid-cols-3 gap-6">
-        {wishlist.map((item) => (
-          <div key={item._id} className="border rounded-lg p-4">
-            <img
-              src={item.book.image}
-              className="h-48 w-full object-cover rounded"
-            />
-            <h3 className="font-semibold mt-3">{item.book.name}</h3>
-            <p className="text-sm text-gray-600">{item.book.author}</p>
-            <p className="font-bold mt-2">${item.book.price}</p>
-          </div>
-        ))}
-      </div>
+    <div className="grid gap-4">
+      {wishlist.map((item) => (
+        <WishlistCard key={item._id} item={item} onRemove={handleRemove} />
+      ))}
     </div>
   );
 };

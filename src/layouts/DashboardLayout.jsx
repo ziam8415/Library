@@ -125,7 +125,7 @@ const DashboardLayout = () => {
         <div className="border-t border-gray-800 p-3 space-y-3">
           {/* Profile Info */}
           <Link to="/dashboard">
-            <div className="flex items-center gap-3 mb-1">
+            <div className="flex items-center gap-3 mb-2">
               <img
                 src={user?.photoURL || "https://i.ibb.co/4pDNDk1/avatar.png"}
                 alt="User"
