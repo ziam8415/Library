@@ -170,8 +170,8 @@ const AddBookForm = () => {
               className="w-full px-4 py-3 border rounded-lg focus:outline-emerald-500"
               {...register("status", { required: "Status is required" })}
             >
-              <option value="Available">published</option>
-              <option value="Out of Stock">unpublished</option>
+              <option value="published">Published</option>
+              <option value="unpublished">Unpublished</option>
             </select>
             {errors.status && (
               <p className="text-sm text-red-500">{errors.status.message}</p>

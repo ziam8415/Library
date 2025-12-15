@@ -172,8 +172,8 @@ const EditBook = () => {
               className="w-full px-4 py-3 border rounded-lg focus:outline-emerald-500"
               {...register("status")}
             >
-              <option value="Available">Published</option>
-              <option value="Out of Stock">Unpublished</option>
+              <option value="published">Published</option>
+              <option value="unpublished">Unpublished</option>
             </select>
           </div>
 

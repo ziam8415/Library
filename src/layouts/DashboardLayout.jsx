@@ -11,6 +11,7 @@ import {
 } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
+import { icon } from "leaflet";
 
 const DashboardLayout = () => {
   const { user, logOut } = useAuth();
@@ -28,6 +29,7 @@ const DashboardLayout = () => {
   const customerMenus = [
     { name: "My Orders", to: "my-orders", icon: <FiList size={20} /> },
     { name: "Invoices", to: "invoices", icon: <FiFileText size={20} /> },
+    { name: "My Wish list", to: "wish-list", icon: <FiFileText size={20} /> },
   ];
 
   const librarianMenus = [

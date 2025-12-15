@@ -19,6 +19,7 @@ import BookDetails from "../pages/Books/BookDetails";
 import Coverage from "../component/Home/Coverage";
 import PaymentSuccess from "../component/Dashboard/Payment/PaymentSuccess";
 import PaymentCancel from "../component/Dashboard/Payment/PaymentCancel";
+import MyWishlist from "../pages/Dshboard/User/MyWishlist";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ export const router = createBrowserRouter([
       { path: "my-orders", element: <MyOrders /> },
       { path: "profile", element: <UserProfile /> },
       { path: "invoices", element: <Invoices /> },
+      { path: "wish-list", element: <MyWishlist /> },
       { path: "payment-success", element: <PaymentSuccess /> },
       { path: "payment-cancelled", element: <PaymentCancel /> },
 

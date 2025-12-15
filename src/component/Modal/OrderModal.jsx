@@ -5,7 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 
-const OrderModal = ({ book, onClose }) => {
+const OrderModal = ({ book, onClose, onSuccessOrder }) => {
   const { user } = useAuth();
   //console.log(user);
 
@@ -18,11 +18,13 @@ const OrderModal = ({ book, onClose }) => {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (orderData) =>
       await axios.post(`${import.meta.env.VITE_API_URL}/orders`, orderData),
-    onSuccess: (data) => {
+
+    onSuccess: (res) => {
       toast.success("Order placed successfully!");
-      console.log(data);
       onClose();
+      onSuccessOrder(res.data);
     },
+
     onError: () => toast.error("Failed to place order."),
   });
 
