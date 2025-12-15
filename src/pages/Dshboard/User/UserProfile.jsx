@@ -36,7 +36,7 @@ const UserProfile = () => {
       await updateUserProfile(data.name, photoURL);
       toast.success("Profile updated successfully!");
       setIsModalOpen(false);
-    } catch (error) {
+    } catch {
       toast.error("Failed to update profile");
     } finally {
       setLoading(false);
@@ -44,32 +44,34 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">👤 My Profile</h2>
+    <div className="p-4 sm:p-6 max-w-3xl mx-auto">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800">
+        👤 My Profile
+      </h2>
 
       {/* Profile Card */}
-      <div className="bg-white rounded-2xl shadow-lg p-6 flex items-center gap-6">
+      <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
         <img
           src={user?.photoURL || "https://i.ibb.co/2FsfXqM/user.png"}
           alt="Profile"
-          className="w-24 h-24 rounded-full object-cover shadow-md"
+          className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover shadow-md"
         />
 
-        <div className="flex-1">
-          <h3 className="text-xl font-semibold">
+        <div className="flex-1 text-center sm:text-left">
+          <h3 className="text-lg sm:text-xl font-semibold">
             {user?.displayName || "No Name"}
           </h3>
-          <p className="text-gray-500">{user?.email}</p>
+          <p className="text-gray-500 text-sm sm:text-base">{user?.email}</p>
 
           {/* Role Badge */}
-          <span className="inline-block mt-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 capitalize">
+          <span className="inline-block mt-2 px-3 py-1 rounded-full text-xs sm:text-sm font-semibold bg-emerald-100 text-emerald-700 capitalize">
             {role || "user"}
           </span>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white transition"
+          className="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white transition text-sm sm:text-base mt-3 sm:mt-0"
         >
           <FiEdit />
           Update Profile
@@ -80,7 +82,7 @@ const UserProfile = () => {
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -90,7 +92,7 @@ const UserProfile = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="bg-white w-full max-w-lg rounded-2xl shadow-xl p-6 relative"
+              className="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 relative"
             >
               {/* Close */}
               <button
@@ -100,7 +102,9 @@ const UserProfile = () => {
                 <FiX size={22} />
               </button>
 
-              <h3 className="text-xl font-semibold mb-4">✏️ Update Profile</h3>
+              <h3 className="text-xl font-semibold mb-4 text-gray-800">
+                ✏️ Update Profile
+              </h3>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 {/* Name */}
@@ -110,7 +114,7 @@ const UserProfile = () => {
                   </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 rounded-lg border focus:outline-emerald-500"
+                    className="w-full px-4 py-3 rounded-lg border focus:outline-emerald-500 text-sm sm:text-base"
                     {...register("name", { required: "Name is required" })}
                   />
                   {errors.name && (
@@ -128,7 +132,7 @@ const UserProfile = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    className="w-full p-3 rounded-lg border bg-gray-50"
+                    className="w-full p-3 rounded-lg border bg-gray-50 text-sm sm:text-base"
                     {...register("image")}
                   />
                   <p className="text-sm text-gray-500 mt-1">
@@ -140,7 +144,7 @@ const UserProfile = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-medium flex justify-center disabled:opacity-60"
+                  className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-medium flex justify-center items-center disabled:opacity-60 text-sm sm:text-base"
                 >
                   {loading ? (
                     <TbFidgetSpinner className="animate-spin text-2xl" />
@@ -153,22 +157,6 @@ const UserProfile = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-emerald-100 rounded-xl p-6 text-center">
-          <h4 className="font-semibold text-gray-700">Books Read</h4>
-          <p className="text-2xl font-bold text-emerald-700">24</p>
-        </div>
-
-        <div className="bg-blue-100 rounded-xl p-6 text-center">
-          <h4 className="font-semibold text-gray-700">Active Orders</h4>
-          <p className="text-2xl font-bold text-blue-700">3</p>
-        </div>
-
-        <div className="bg-yellow-100 rounded-xl p-6 text-center">
-          <h4 className="font-semibold text-gray-700">Rewards Points</h4>
-          <p className="text-2xl font-bold text-yellow-700">1280</p>
-        </div>
-      </div>
     </div>
   );
 };
