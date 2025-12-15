@@ -16,16 +16,16 @@ import AdminProfile from "../pages/Dshboard/admin/AdminProfile";
 import EditBook from "../pages/Dshboard/librarian/EditBook";
 import AllBooks from "../pages/Books/AllBooks";
 import BookDetails from "../pages/Books/BookDetails";
-import Coverage from "../component/Home/Coverage";
 import PaymentSuccess from "../component/Dashboard/Payment/PaymentSuccess";
 import PaymentCancel from "../component/Dashboard/Payment/PaymentCancel";
 import MyWishlist from "../pages/Dshboard/User/MyWishlist";
+import ErrorPage from "../pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    // errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -49,9 +49,12 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: <DashboardLayout />,
     children: [
+      {
+        index: true,
+        element: <UserProfile />, // 👈 default page
+      },
       // user
       { path: "my-orders", element: <MyOrders /> },
-      { path: "profile", element: <UserProfile /> },
       { path: "invoices", element: <Invoices /> },
       { path: "wish-list", element: <MyWishlist /> },
       { path: "payment-success", element: <PaymentSuccess /> },
@@ -69,7 +72,6 @@ export const router = createBrowserRouter([
       // admin
       { path: "all-users", element: <AllUsers /> },
       { path: "manage-books", element: <ManageBooks /> },
-      { path: "profile", element: <AdminProfile /> },
     ],
   },
 ]);

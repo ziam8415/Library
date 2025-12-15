@@ -23,7 +23,7 @@ const DashboardLayout = () => {
   /* -------------------- MENUS -------------------- */
 
   const commonMenus = [
-    { name: "My Profile", to: "profile", icon: <FiUser size={20} /> },
+    // { name: "My Profile", to: "profile", icon: <FiUser size={20} /> },
   ];
 
   const customerMenus = [
@@ -121,11 +121,32 @@ const DashboardLayout = () => {
           ))}
         </ul>
 
-        {/* Logout */}
-        <div className="border-t border-gray-800 p-3">
+        {/* USER PROFILE (Bottom) */}
+        <div className="border-t border-gray-800 p-3 space-y-3">
+          {/* Profile Info */}
+          <Link to="/dashboard">
+            <div className="flex items-center gap-3 mb-1">
+              <img
+                src={user?.photoURL || "https://i.ibb.co/4pDNDk1/avatar.png"}
+                alt="User"
+                className="w-10 h-10 rounded-full object-cover border"
+              />
+
+              {!collapse && (
+                <div className="leading-tight">
+                  <p className="text-sm font-semibold">{user?.displayName}</p>
+                  <p className="text-xs text-gray-400 truncate">
+                    {user?.email}
+                  </p>
+                </div>
+              )}
+            </div>
+          </Link>
+
+          {/* Logout */}
           <button
             onClick={logOut}
-            className="flex items-center gap-3 w-full px-3 py-2 rounded-md bg-red-600 hover:bg-red-700 transition"
+            className="flex items-center justify-center gap-3 w-full  px-3 py-2 rounded-md bg-red-600 hover:bg-red-700 transition"
           >
             <FiLogOut size={20} />
             {!collapse && <span>Logout</span>}
