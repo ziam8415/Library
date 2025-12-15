@@ -4,6 +4,7 @@ import LoadingSpinner from "../../../component/Shared/LoadingSpinner";
 import { toast } from "react-hot-toast";
 import useAuth from "../../../hooks/useAuth";
 import WishlistCard from "../../../component/Dashboard/Card/WishlistCard";
+import { AnimatePresence } from "framer-motion";
 
 const MyWishlist = () => {
   const { user } = useAuth();
@@ -22,11 +23,15 @@ const MyWishlist = () => {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/wishlist/${id}`);
+      await axios.delete(
+        `${import.meta.env.VITE_API_URL}/wishlist/${id}?email=${user.email}`
+      );
+
       toast.success("Removed from wishlist");
       queryClient.invalidateQueries(["wishlist", user.email]);
-    } catch {
+    } catch (error) {
       toast.error("Failed to remove");
+      console.error(error);
     }
   };
 
@@ -42,9 +47,11 @@ const MyWishlist = () => {
 
   return (
     <div className="grid gap-4">
-      {wishlist.map((item) => (
-        <WishlistCard key={item._id} item={item} onRemove={handleRemove} />
-      ))}
+      <AnimatePresence>
+        {wishlist.map((item) => (
+          <WishlistCard key={item._id} item={item} onRemove={handleRemove} />
+        ))}
+      </AnimatePresence>
     </div>
   );
 };
