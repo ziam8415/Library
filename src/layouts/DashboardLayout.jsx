@@ -29,7 +29,7 @@ const DashboardLayout = () => {
   const customerMenus = [
     { name: "My Orders", to: "my-orders", icon: <FiList size={20} /> },
     { name: "Invoices", to: "invoices", icon: <FiFileText size={20} /> },
-    { name: "My Wish list", to: "wish-list", icon: <FiFileText size={20} /> },
+    { name: "My Wishlist", to: "wish-list", icon: <FiFileText size={20} /> },
   ];
 
   const librarianMenus = [
