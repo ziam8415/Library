@@ -8,6 +8,12 @@
 
 📦 GitHub Repository Clint: https://github.com/ziam8415/Library
 
+# Admin Access
+
+Email : admin@gmail.com
+
+Password : Ab123456@@
+
 Library is a modern online book buying platform where users can explore books, place orders, manage wishlists, and leave reviews. The application is built with a clean UI, smooth animations, and secure authentication to provide a seamless user experience.
 
 ✨ Features
