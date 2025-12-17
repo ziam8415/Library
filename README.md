@@ -136,7 +136,7 @@ src/
 
 🚀 Getting Started (Local Setup)
 1️⃣ Clone the Repository
-git clone https://github.com/your-username/library-client.git
+git clone https://github.com/ziam8415/Library
 cd library-client
 
 2️⃣ Install Dependencies
