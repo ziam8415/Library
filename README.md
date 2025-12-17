@@ -1,16 +1,184 @@
-# React + Vite
+📚 Library – Online Book Buying Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🔗 Live Website: https://library-z3321.netlify.app/
 
-Currently, two official plugins are available:
+Library is a modern online book buying platform where users can explore books, place orders, manage wishlists, and leave reviews. The application is built with a clean UI, smooth animations, and secure authentication to provide a seamless user experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✨ Features
+👤 Authentication
 
-## React Compiler
+Email & Password login
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Google Sign-In
 
-## Expanding the ESLint configuration
+Secure user authentication
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Protected routes
+
+📖 Books
+
+Browse all available books
+
+View detailed book information
+
+See price, author, category, and availability
+
+Latest books section
+
+❤️ Wishlist
+
+Add books to wishlist
+
+Prevent duplicate wishlist entries
+
+Wishlist linked to user account
+
+🛒 Orders
+
+Place orders using a modal form
+
+Order status management (pending/unpaid)
+
+Secure order handling
+
+⭐ Reviews
+
+Submit reviews after successful orders
+
+View all reviews for a book
+
+Average rating calculation
+
+Clean review cards with shadows
+
+🌗 Theme Support
+
+Light / Dark mode toggle
+
+Theme saved in local storage
+
+🗺 Coverage Map
+
+Interactive map using Leaflet
+
+Shows service availability across districts
+
+🎨 UI & UX
+
+Responsive design (mobile, tablet, desktop)
+
+Smooth animations with Framer Motion
+
+Modern cards, modals, and sliders
+
+Book-focused hero section with Swiper
+
+🛠 Tech Stack
+Frontend
+
+React
+
+Vite
+
+Tailwind CSS
+
+DaisyUI
+
+Framer Motion
+
+Swiper
+
+React Router
+
+React Hook Form
+
+TanStack React Query
+
+Axios
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Authentication
+
+Firebase Authentication
+
+Maps & Extras
+
+Leaflet
+
+React Icons
+
+React Hot Toast
+
+📂 Project Structure (Frontend)
+src/
+├── components/
+│ ├── Shared/
+│ ├── Modal/
+│ ├── Navbar/
+│ └── Cards/
+├── pages/
+│ ├── Home/
+│ ├── Books/
+│ ├── BookDetails/
+│ ├── Login/
+│ └── SignUp/
+├── hooks/
+├── providers/
+├── utils/
+└── main.jsx
+
+🚀 Getting Started (Local Setup)
+1️⃣ Clone the Repository
+git clone https://github.com/your-username/library-client.git
+cd library-client
+
+2️⃣ Install Dependencies
+npm install
+
+3️⃣ Environment Variables
+
+Create a .env file in the root directory:
+
+VITE_API_URL=your_backend_api_url
+VITE_IMAGE_API_KEY=your_imgbb_api_key
+
+4️⃣ Run the Project
+npm run dev
+
+📦 Build for Production
+npm run build
+
+🌍 Deployment
+
+Frontend: Netlify
+
+Backend: Vercel / Render
+
+Database: MongoDB Atlas
+
+📌 Future Improvements
+
+Online payment integration
+
+Order history page
+
+Admin dashboard
+
+Search & filter system
+
+Pagination & sorting
+
+Better accessibility (a11y)
+
+👨‍💻 Author
+
+Ziam
+Frontend Developer
+Passionate about building modern, user-friendly web applications.

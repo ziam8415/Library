@@ -12,6 +12,7 @@ import {
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 import { icon } from "leaflet";
+import LoadingSpinner from "../component/Shared/LoadingSpinner";
 
 const DashboardLayout = () => {
   const { user, logOut } = useAuth();
@@ -52,11 +53,7 @@ const DashboardLayout = () => {
 
   /* -------------------- LOADING -------------------- */
   if (isRoleLoading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-gray-100">
-        <span className="text-gray-500 text-lg">Loading dashboard...</span>
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   const sidebarWidth = collapse ? "w-16" : "w-64";

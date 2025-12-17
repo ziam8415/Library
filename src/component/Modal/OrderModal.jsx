@@ -1,13 +1,12 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import { motion } from "framer-motion";
 
 const OrderModal = ({ book, onClose, onSuccessOrder }) => {
   const { user } = useAuth();
-  //console.log(user);
 
   const {
     register,
@@ -17,7 +16,7 @@ const OrderModal = ({ book, onClose, onSuccessOrder }) => {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (orderData) =>
-      await axios.post(`${import.meta.env.VITE_API_URL}/orders`, orderData),
+      axios.post(`${import.meta.env.VITE_API_URL}/orders`, orderData),
 
     onSuccess: (res) => {
       toast.success("Order placed successfully!");
@@ -48,70 +47,89 @@ const OrderModal = ({ book, onClose, onSuccessOrder }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl w-full max-w-md p-6 relative">
+    /* BACKDROP */
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md">
+      {/* MODAL CARD */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="relative w-full max-w-md rounded-2xl bg-white  shadow-2xl p-6"
+      >
+        {/* CLOSE BUTTON */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-700 "
         >
           ✕
         </button>
-        <h2 className="text-2xl font-bold mb-4">
+
+        <h2 className="text-xl font-bold mb-5 text-gray-800 dark:text-white">
           Place Order for "{book.name}"
         </h2>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* NAME */}
           <div>
-            <label className="block font-medium">Name</label>
+            <label className="block text-sm font-medium mb-1">Name</label>
             <input
-              type="text"
               value={user.displayName}
               readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100"
+              className="w-full px-4 py-2 rounded-lg  border"
             />
           </div>
 
+          {/* EMAIL */}
           <div>
-            <label className="block font-medium">Email</label>
+            <label className="block text-sm font-medium mb-1">Email</label>
             <input
-              type="email"
               value={user.email}
               readOnly
-              className="w-full px-4 py-2 border rounded-lg bg-gray-100"
+              className="w-full px-4 py-2 rounded-lg  border"
             />
           </div>
 
+          {/* PHONE */}
           <div>
-            <label className="block font-medium">Phone Number</label>
+            <label className="block text-sm font-medium mb-1">
+              Phone Number
+            </label>
             <input
-              type="text"
               {...register("phone", { required: "Phone number is required" })}
-              className="w-full px-4 py-2 border rounded-lg"
+              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-emerald-500 outline-none"
             />
             {errors.phone && (
-              <p className="text-red-500 text-sm">{errors.phone.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.phone.message}
+              </p>
             )}
           </div>
 
+          {/* ADDRESS */}
           <div>
-            <label className="block font-medium">Address</label>
+            <label className="block text-sm font-medium mb-1">Address</label>
             <textarea
               {...register("address", { required: "Address is required" })}
-              className="w-full px-4 py-2 border rounded-lg"
-            ></textarea>
+              className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-emerald-500 outline-none"
+            />
             {errors.address && (
-              <p className="text-red-500 text-sm">{errors.address.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.address.message}
+              </p>
             )}
           </div>
 
+          {/* SUBMIT */}
           <button
             type="submit"
-            className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition flex justify-center"
             disabled={isPending}
+            className="w-full bg-emerald-600 text-white py-2 rounded-lg hover:bg-emerald-700 transition font-medium"
           >
             {isPending ? "Placing Order..." : "Place Order"}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

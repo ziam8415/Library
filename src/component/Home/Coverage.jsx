@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
+import { motion } from "framer-motion";
 
 // Fix default marker icons (Leaflet bug in Vite/React)
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,31 +14,39 @@ L.Icon.Default.mergeOptions({
 });
 
 const Coverage = () => {
-  const [areas, setAreas] = useState([]); // ← FIXED
+  const [areas, setAreas] = useState([]);
   const mapRef = useRef(null);
 
   // Fetch JSON on mount
   useEffect(() => {
     fetch("/warehouses.json")
       .then((res) => res.json())
-      .then((data) => {
-        setAreas(data); // ← SAVE DATA TO STATE
-      })
+      .then((data) => setAreas(data))
       .catch((err) => console.error(err));
   }, []);
 
   const position = [23.685, 90.3563];
 
   return (
-    <div className="px-4 md:px-10 lg:px-20  rounded-3xl relative z-0">
-      <h1 className="font-extrabold  text-4xl md:text-5xl my-10 pt-10">
-        We are available in 64 districts
-      </h1>
+    <div className="px-4 md:px-10 lg:px-20 rounded-3xl relative z-0 py-10">
+      <motion.h1
+        className="font-extrabold text-4xl md:text-5xl text-center mb-10"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        We are available in{" "}
+        <span className="text-emerald-600">64 districts</span>
+      </motion.h1>
 
-      {/* MAP (no navbar overlap) */}
-      <div className="py-6 relative z-0">
+      <motion.div
+        className="py-6 relative z-0"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
         <MapContainer
-          className="w-full h-[350px] md:h-[500px] lg:h-[650px] rounded-xl overflow-hidden"
+          className="w-full h-[350px] md:h-[500px] lg:h-[650px] rounded-xl overflow-hidden shadow-lg"
           center={position}
           zoom={7}
           scrollWheelZoom={false}
@@ -48,9 +57,15 @@ const Coverage = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          {/* Safe map render */}
           {areas?.map((area, index) => (
-            <Marker key={index} position={[area.latitude, area.longitude]}>
+            <Marker
+              key={index}
+              position={[area.latitude, area.longitude]}
+              eventHandlers={{
+                mouseover: (e) => e.target.openPopup(),
+                mouseout: (e) => e.target.closePopup(),
+              }}
+            >
               <Popup>
                 <strong>{area.district}</strong> <br />
                 {area.covered_area?.join(", ")}
@@ -58,7 +73,7 @@ const Coverage = () => {
             </Marker>
           ))}
         </MapContainer>
-      </div>
+      </motion.div>
     </div>
   );
 };

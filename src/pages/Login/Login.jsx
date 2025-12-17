@@ -13,39 +13,30 @@ const Login = () => {
   const location = useLocation();
   const from = location.state || "/";
 
-  //react hook form
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
     try {
-      //User Login
-      const { user } = await signIn(email, password);
-      // save or update in db
+      const { user } = await signIn(data.email, data.password);
       await saveOrUpdateUser({
         name: user?.displayName,
         email: user?.email,
         image: user?.photoURL,
       });
-
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      console.log(err);
       setLoading(false);
       toast.error(err?.message);
     }
   };
 
   if (loading) return <LoadingSpinner />;
-  if (user) return <Navigate to={from} replace={true} />;
+  if (user) return <Navigate to={from} replace />;
 
-  // Handle Google Signin
   const handleGoogleSignIn = async () => {
     try {
-      //User Registration using google
       const { user } = await signInWithGoogle();
-      // save or update in db
       await saveOrUpdateUser({
         name: user?.displayName,
         email: user?.email,
@@ -54,102 +45,90 @@ const Login = () => {
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      console.log(err);
       setLoading(false);
       toast.error(err?.message);
     }
   };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white">
-      <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
-        <div className="mb-8 text-center">
-          <h1 className="my-3 text-4xl font-bold">Log In</h1>
-          <p className="text-sm text-gray-400">
-            Sign in to access your account
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 to-lime-100 px-4">
+      <div className="w-full max-w-md rounded-2xl bg-white/80  backdrop-blur shadow-xl p-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold">Welcome Back 👋</h1>
+          <p className="text-sm text-gray-500 mt-2">
+            Log in to continue to your library
           </p>
         </div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate=""
-          action=""
-          className="space-y-6 ng-untouched ng-pristine ng-valid"
-        >
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block mb-2 text-sm">
-                Email address
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="Enter Your Email Here"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
-                data-temp-mail-org="0"
-                {...register("email", { required: true })}
-              />
-            </div>
-            <div>
-              <div className="flex justify-between">
-                <label htmlFor="password" className="text-sm mb-2">
-                  Password
-                </label>
-              </div>
-              <input
-                type="password"
-                autoComplete="current-password"
-                id="password"
-                placeholder="*******"
-                className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-lime-500 bg-gray-200 text-gray-900"
-                {...register("password", {
-                  required: "Password is required",
-                })}
-              />
-            </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <div>
+            <label className="text-sm font-medium">Email</label>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              className="w-full mt-1 px-4 py-3 rounded-xl bg-gray-100  border border-transparent focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition"
+              {...register("email", { required: true })}
+            />
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="bg-lime-500 w-full rounded-md py-3 text-white"
-            >
-              {loading ? (
-                <TbFidgetSpinner className="animate-spin m-auto" />
-              ) : (
-                "Continue"
-              )}
-            </button>
+            <label className="text-sm font-medium">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full mt-1 px-4 py-3 rounded-xl bg-gray-100  border border-transparent focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition"
+              {...register("password", { required: true })}
+            />
           </div>
+
+          {/* Login Button */}
+          <button
+            type="submit"
+            className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-500 to-lime-500 hover:opacity-90 transition flex justify-center items-center"
+          >
+            {loading ? (
+              <TbFidgetSpinner className="animate-spin text-xl" />
+            ) : (
+              "Log In"
+            )}
+          </button>
         </form>
-        <div className="space-y-1">
-          <button className="text-xs hover:underline hover:text-lime-500 text-gray-400 cursor-pointer">
+
+        {/* Forgot password */}
+        <div className="text-right mt-3">
+          <button className="text-xs text-gray-500 hover:text-emerald-500">
             Forgot password?
           </button>
         </div>
-        <div className="flex items-center pt-4 space-x-1">
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-          <p className="px-3 text-sm dark:text-gray-400">
-            Login with social accounts
-          </p>
-          <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-        </div>
-        <div
-          onClick={handleGoogleSignIn}
-          className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer"
-        >
-          <FcGoogle size={32} />
 
-          <p>Continue with Google</p>
+        {/* Divider */}
+        <div className="flex items-center my-6">
+          <div className="flex-1 h-px bg-gray-300 dark:bg-gray-700"></div>
+          <span className="px-3 text-sm text-gray-400">OR</span>
+          <div className="flex-1 h-px bg-gray-300 dark:bg-gray-700"></div>
         </div>
-        <p className="px-6 text-sm text-center text-gray-400">
-          Don&apos;t have an account yet?{" "}
+
+        {/* Google Login */}
+        <button
+          onClick={handleGoogleSignIn}
+          className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+        >
+          <FcGoogle size={24} />
+          <span className="font-medium">Continue with Google</span>
+        </button>
+
+        {/* Footer */}
+        <p className="text-sm text-center text-gray-500 mt-6">
+          Don’t have an account?
           <Link
-            state={from}
             to="/signup"
-            className="hover:underline hover:text-lime-500 text-gray-600"
+            state={from}
+            className="ml-1 text-emerald-600 hover:underline font-medium"
           >
             Sign up
           </Link>
-          .
         </p>
       </div>
     </div>
