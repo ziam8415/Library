@@ -146,9 +146,8 @@ const AllUsers = () => {
                 <p className="text-gray-500 text-sm break-words">
                   {user.email}
                 </p>
-              </div>
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-semibold capitalize
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-semibold capitalize
                 ${
                   user.role === "admin"
                     ? "bg-emerald-100 text-emerald-700"
@@ -156,9 +155,10 @@ const AllUsers = () => {
                     ? "bg-blue-100 text-blue-700"
                     : "bg-gray-100 text-gray-700"
                 }`}
-              >
-                {user.role}
-              </span>
+                >
+                  {user.role}
+                </span>
+              </div>
             </div>
             <div className="flex justify-between flex-wrap gap-2">
               <button

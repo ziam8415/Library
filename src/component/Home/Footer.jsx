@@ -1,10 +1,16 @@
 import React from "react";
-import { Github, Instagram, Linkedin, LinkedinIcon } from "lucide-react";
+import {
+  Facebook,
+  Github,
+  Instagram,
+  Linkedin,
+  LinkedinIcon,
+} from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="border-t border-gray-200  ">
-      <div className="max-w-6xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Title */}
         <div className="text-center md:text-left">
           <h2 className="text-2xl font-bold  tracking-tight">
@@ -16,7 +22,7 @@ const Footer = () => {
         {/* Social Icons */}
         <div className="flex items-center gap-6">
           <a
-            href="https://github.com/"
+            href="https://github.com/ziam8415"
             target="_blank"
             rel="noreferrer"
             className="text-gray-500 hover:text-gray-800 transition"
@@ -41,7 +47,7 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://linkedin.com/"
+            href="https://www.linkedin.com/in/ziam-akhand/"
             target="_blank"
             rel="noreferrer"
             className="text-gray-500 hover:text-gray-800 transition"
@@ -50,12 +56,12 @@ const Footer = () => {
           </a>
 
           <a
-            href="https://instagram.com/"
+            href="https://www.facebook.com/share/15zbSNXiPx/"
             target="_blank"
             rel="noreferrer"
             className="text-gray-500 hover:text-gray-800 transition"
           >
-            <Instagram className="w-5 h-5" />
+            <Facebook className="w-5 h-5" />
           </a>
         </div>
       </div>

@@ -1,25 +1,39 @@
 import { createBrowserRouter } from "react-router";
-import Home from "../pages/Home/Home";
+
+// layouts
 import MainLayout from "../layouts/MainLayout";
+import DashboardLayout from "../layouts/DashboardLayout";
+import PrivateRoute from "./PrivateRoute";
+
+// pages
+import Home from "../pages/Home/Home";
 import Login from "../pages/login/Login";
 import Signup from "../pages/SingUp/SingUp";
-import DashboardLayout from "../layouts/DashboardLayout";
+import ErrorPage from "../pages/ErrorPage";
+
+// user dashboard
 import MyOrders from "../pages/Dshboard/User/MyOrders";
 import UserProfile from "../pages/Dshboard/User/UserProfile";
 import Invoices from "../pages/Dshboard/User/Invoices";
+import MyWishlist from "../pages/Dshboard/User/MyWishlist";
+
+// librarian
 import AddBook from "../pages/Dshboard/librarian/AddBook";
 import MyBooks from "../pages/Dshboard/librarian/MyBooks";
 import Orders from "../pages/Dshboard/librarian/Orders";
+import EditBook from "../pages/Dshboard/librarian/EditBook";
+
+// admin
 import AllUsers from "../pages/Dshboard/admin/AllUsers";
 import ManageBooks from "../pages/Dshboard/admin/ManageBooks";
-import AdminProfile from "../pages/Dshboard/admin/AdminProfile";
-import EditBook from "../pages/Dshboard/librarian/EditBook";
+
+// books
 import AllBooks from "../pages/Books/AllBooks";
 import BookDetails from "../pages/Books/BookDetails";
+
+// payment
 import PaymentSuccess from "../component/Dashboard/Payment/PaymentSuccess";
 import PaymentCancel from "../component/Dashboard/Payment/PaymentCancel";
-import MyWishlist from "../pages/Dshboard/User/MyWishlist";
-import ErrorPage from "../pages/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -27,32 +41,26 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/books",
-        element: <AllBooks />,
-      },
-      {
-        path: "/book_details/:id",
-        element: <BookDetails />,
-      },
+      { path: "/", element: <Home /> },
+      { path: "/books", element: <AllBooks /> },
+      { path: "/book_details/:id", element: <BookDetails /> },
     ],
   },
+
   { path: "/login", element: <Login /> },
   { path: "/signup", element: <Signup /> },
 
-  //dashboard
+  // PROTECTED DASHBOARD
   {
-    path: "dashboard",
-    element: <DashboardLayout />,
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
-      {
-        index: true,
-        element: <UserProfile />, // 👈 default page
-      },
+      { index: true, element: <UserProfile /> },
+
       // user
       { path: "my-orders", element: <MyOrders /> },
       { path: "invoices", element: <Invoices /> },
@@ -63,10 +71,7 @@ export const router = createBrowserRouter([
       // librarian
       { path: "add-book", element: <AddBook /> },
       { path: "my-books", element: <MyBooks /> },
-      {
-        path: "edit-book/:id",
-        element: <EditBook />,
-      },
+      { path: "edit-book/:id", element: <EditBook /> },
       { path: "orders", element: <Orders /> },
 
       // admin

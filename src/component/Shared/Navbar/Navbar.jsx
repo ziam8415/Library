@@ -2,7 +2,7 @@ import Container from "../Container";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BsMoon, BsSun } from "react-icons/bs";
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import avatarImg from "../../../assets/placeholder.jpg";
 import { ThemeContext } from "../../../providers/ThemeProvider";
 import useAuth from "../../../hooks/useAuth";
@@ -46,13 +46,32 @@ const Navbar = () => {
           </Link>
 
           {/* DESKTOP LINKS */}
-          <div className="hidden md:flex items-center gap-8 font-medium">
-            <Link to="/" className="hover:text-blue-600 transition">
+          <div className="hidden md:flex items-center text-xl gap-8 font-medium">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `transition hover:text-blue-600 ${
+                  isActive
+                    ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+                    : ""
+                }`
+              }
+            >
               Home
-            </Link>
-            <Link to="/books" className="hover:text-blue-600 transition">
+            </NavLink>
+
+            <NavLink
+              to="/books"
+              className={({ isActive }) =>
+                `transition hover:text-blue-600 ${
+                  isActive
+                    ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+                    : ""
+                }`
+              }
+            >
               Books
-            </Link>
+            </NavLink>
 
             {user ? (
               // If logged in

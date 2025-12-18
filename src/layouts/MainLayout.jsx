@@ -2,10 +2,11 @@ import React, { useContext } from "react";
 import Navbar from "../component/Shared/Navbar/Navbar";
 import { ThemeContext } from "../providers/ThemeProvider";
 import { Outlet } from "react-router";
+import Footer from "../component/Home/Footer";
 
 const MainLayout = () => {
   const { theme } = useContext(ThemeContext);
-  console.log(theme);
+  //console.log(theme);
   //const theme = "dark";
   return (
     <div
@@ -17,6 +18,7 @@ const MainLayout = () => {
       <div className={`pt-24 w-11/12  mx-auto min-h-[calc(100vh-68px)]`}>
         <Outlet />
       </div>
+      <Footer></Footer>
     </div>
   );
 };
