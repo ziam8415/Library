@@ -131,7 +131,7 @@ React Icons
 React Hot Toast
 
 # 📂 Project Structure (Frontend)
-
+```
 src/
 ├── components/
 │ ├── Shared/
@@ -148,6 +148,7 @@ src/
 ├── providers/
 ├── utils/
 └── main.jsx
+```
 
 # 🚀 Getting Started (Local Setup)
 
