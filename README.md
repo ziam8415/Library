@@ -1,4 +1,4 @@
-## 📚 Library – Online Book Buying Platform
+# 📚 Library – Online Book Buying Platform
 
 🔗 Live Website: https://library-z3321.netlify.app/
 
@@ -8,7 +8,7 @@
 
 📦 GitHub Repository Clint: https://github.com/ziam8415/Library
 
-# Admin Access
+## Admin Access
 
 Email : admin@gmail.com
 
@@ -16,9 +16,9 @@ Password : Ab123456@@
 
 Library is a modern online book buying platform where users can explore books, place orders, manage wishlists, and leave reviews. The application is built with a clean UI, smooth animations, and secure authentication to provide a seamless user experience.
 
-## ✨ Features
+# ✨ Features
 
-# 👤 Authentication
+## 👤 Authentication
 
 Email & Password login
 
@@ -28,7 +28,7 @@ Secure user authentication
 
 Protected routes
 
-📖 Books
+## 📖 Books
 
 Browse all available books
 
@@ -38,7 +38,7 @@ See price, author, category, and availability
 
 Latest books section
 
-❤️ Wishlist
+## ❤️ Wishlist
 
 Add books to wishlist
 
@@ -46,7 +46,7 @@ Prevent duplicate wishlist entries
 
 Wishlist linked to user account
 
-🛒 Orders
+## 🛒 Orders
 
 Place orders using a modal form
 
@@ -54,7 +54,7 @@ Order status management (pending/unpaid)
 
 Secure order handling
 
-⭐ Reviews
+## ⭐ Reviews
 
 Submit reviews after successful orders
 
@@ -64,7 +64,7 @@ Average rating calculation
 
 Clean review cards with shadows
 
-🌗 Theme Support
+## 🌗 Theme Support
 
 Light / Dark mode toggle
 
@@ -76,7 +76,7 @@ Interactive map using Leaflet
 
 Shows service availability across districts
 
-🎨 UI & UX
+## 🎨 UI & UX
 
 Responsive design (mobile, tablet, desktop)
 
@@ -86,7 +86,8 @@ Modern cards, modals, and sliders
 
 Book-focused hero section with Swiper
 
-🛠 Tech Stack
+## 🛠 Tech Stack
+
 Frontend
 
 React
@@ -129,7 +130,8 @@ React Icons
 
 React Hot Toast
 
-📂 Project Structure (Frontend)
+# 📂 Project Structure (Frontend)
+
 src/
 ├── components/
 │ ├── Shared/
@@ -147,28 +149,35 @@ src/
 ├── utils/
 └── main.jsx
 
-🚀 Getting Started (Local Setup)
+# 🚀 Getting Started (Local Setup)
+
 1️⃣ Clone the Repository
+
 git clone https://github.com/ziam8415/Library
-cd library-client
+
+cd library-frontend
 
 2️⃣ Install Dependencies
+
 npm install
 
 3️⃣ Environment Variables
 
-Create a .env file in the root directory:
+# Create a .env file in the root directory:
 
 VITE_API_URL=your_backend_api_url
+
 VITE_IMAGE_API_KEY=your_imgbb_api_key
 
 4️⃣ Run the Project
+
 npm run dev
 
-📦 Build for Production
+## 📦 Build for Production
+
 npm run build
 
-🌍 Deployment
+## 🌍 Deployment
 
 Frontend: Netlify
 
@@ -176,7 +185,7 @@ Backend: Vercel / Render
 
 Database: MongoDB Atlas
 
-📌 Future Improvements
+## 📌 Future Improvements
 
 Online payment integration
 
@@ -190,8 +199,10 @@ Pagination & sorting
 
 Better accessibility (a11y)
 
-👨‍💻 Author
+# 👨‍💻 Author
 
 Ziam
+
 Frontend Developer
+
 Passionate about building modern, user-friendly web applications.
